@@ -6,3 +6,11 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+.DS_Store (macOS)
+Thumbs.db (Windows)
+.env
+.env.local
+*.log
+npm-debug.log*
+*.tmp
+*.temp

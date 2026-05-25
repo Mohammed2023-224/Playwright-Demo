@@ -2,80 +2,80 @@
   "cookies": [
     {
       "name": "csrftoken",
-      "value": "T98CbMdXBUdDib6k5EIQRrB70jW8asBgBlySREmPYPlxqFY8V57UNfVmfdhZbrdU",
+      "value": "Kotl2IszJKMl1pa3TA6MMJC5P1mwZcKCk8JVjDxYdb4jnocJm3otYItJkGgoKXcG",
       "domain": "www.automationexercise.com",
       "path": "/",
-      "expires": 1811192798.769602,
+      "expires": 1811197181.949738,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "IDE",
-      "value": "AHWqTUmXqLkv_bjvDKvWv7oU6iWq8p5JK03KnBCTg1w6q_gAiglRWVsnR4cSC1zOMuk",
+      "value": "AHWqTUlz53yP2dlhPTR4_W0A4xCQVAZndVah-Mc54rRq3mjrn5i1h5tDA0PALpo2Jr8",
       "domain": ".doubleclick.net",
       "path": "/",
-      "expires": 1814303197.338645,
+      "expires": 1814307580.515393,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "__gads",
-      "value": "ID=6ae46a74687140e0:T=1779743197:RT=1779743197:S=ALNI_MbxFiv_5RZRbwoSq7cX4J3k13b4jA",
+      "value": "ID=348b49c632a2880a:T=1779747580:RT=1779747580:S=ALNI_MbAkw7_Z0-bQVEeQwX67HUiRwfseg",
       "domain": ".automationexercise.com",
       "path": "/",
-      "expires": 1813439197,
+      "expires": 1813443580,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "__gpi",
-      "value": "UID=000013fed81bfa7b:T=1779743197:RT=1779743197:S=ALNI_MawNWGB3YsaUNr-kqWwdoYuHfmRnw",
+      "value": "UID=000013fed9e76815:T=1779747580:RT=1779747580:S=ALNI_MZqAodRneuW7ra5X_JddbjzvC9CGg",
       "domain": ".automationexercise.com",
       "path": "/",
-      "expires": 1813439197,
+      "expires": 1813443580,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "__eoi",
-      "value": "ID=c79349fb4c2b3c1d:T=1779743197:RT=1779743197:S=AA-Afjbimbou_VWlL2RIY3nMVrzz",
+      "value": "ID=59358209f5c5f219:T=1779747580:RT=1779747580:S=AA-AfjbzCTyLTacLZF9MdLddeXaJ",
       "domain": ".automationexercise.com",
       "path": "/",
-      "expires": 1795295197,
+      "expires": 1795299580,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
-      "name": "FCNEC",
-      "value": "%5B%5B%22AKsRol_JnzioQzU0MvoX3f3NIdoPuCbp4IkxEwRsgDeqvGpxlC373hsuUwd1gL3lGqAKYZS9e0iLcqJouh2eopA9UdZFE_Y-yJTAifN8vA3JJtxIqzrsHz9gDeSpdt_idu8tgrfgwB7araBsuVa1L34JDwg_vv6_dg%3D%3D%22%5D%5D",
-      "domain": ".automationexercise.com",
-      "path": "/",
-      "expires": 1811279198,
-      "httpOnly": false,
-      "secure": false,
-      "sameSite": "Lax"
-    },
-    {
       "name": "sessionid",
-      "value": "iut86jfj708xid1t1932xh4scldszcj2",
+      "value": "5tgbtszgxatbpdl6k0rlb8kif9p7tsy7",
       "domain": "www.automationexercise.com",
       "path": "/",
-      "expires": 1780952798.518544,
+      "expires": 1780957181.234322,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "FCCDCF",
-      "value": "%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2C%5B%5B32%2C%22%5B%5C%22a07182b0-bd60-4872-abe7-d1646b2284b3%5C%22%2C%5B1779743197%2C190000000%5D%5D%22%5D%5D%5D",
+      "value": "%5Bnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2C%5B%5B32%2C%22%5B%5C%221b75a947-b04a-4372-809b-588f98273cd2%5C%22%2C%5B1779747580%2C370000000%5D%5D%22%5D%5D%5D",
       "domain": ".automationexercise.com",
       "path": "/",
-      "expires": 1813439199,
+      "expires": 1813443582,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "FCNEC",
+      "value": "%5B%5B%22AKsRol--M5s5204O85tjWNizuXrB1Gc_Dr3D8EV57FnMqB0s4Hze3gkBf9V_BvIe_81ZkCLg3U8787ORYwkyG8fHecohPw29B58vS_ol7s1HWbZMAcGJjIdUUA1-I7_619p42-mKjuQklSxaSVLxxFfYgObz7dgDpA%3D%3D%22%5D%5D",
+      "domain": ".automationexercise.com",
+      "path": "/",
+      "expires": 1811283583,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -91,7 +91,7 @@
         },
         {
           "name": "google_ama_config",
-          "value": "[[[[null,1,null,[],null,null,\"BODY>SECTION>DIV.container>DIV.row\"],4,[\"10px\",\"10px\",0],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-bottom\"],2,[\"10px\",\"10px\",0],[5],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"BODY>FOOTER#footer\"],1,[\"10px\",\"10px\",0],[0],null,[],[],1,[],[2,4]],[[null,0,null,[],null,null,\"DIV#slider-carousel\"],4,[\"10px\",\"10px\",1],[1],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"SECTION#form\"],4,[\"10px\",\"185px\",1],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"BODY\"],3,[\"10px\",\"10px\",1],[5],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV#accordian>DIV.panel.panel-default>DIV.panel-heading>.panel-title\"],1,[\"10px\",\"30px\",1],[0],null,[],[],1,[],[]],[[null,1,null,[],null,null,\"DIV#accordian>DIV.panel.panel-default>DIV.panel-heading>.panel-title\"],1,[\"10px\",\"10px\",0],[0],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-widget>DIV.container>DIV.row\"],4,[\"10px\",\"10px\",0],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-bottom\"],4,[\"10px\",\"10px\",0],[5],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV#accordian\"],4,[\"10px\",\"35px\",0],[0],null,[],[],1,[],[]],[[null,1,null,[],null,null,\"BODY>SECTION>DIV.container\"],4,[\"10px\",\"10px\",0],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"BODY\"],2,[\"10px\",\"10px\",1],[4],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-bottom\"],3,[\"10px\",\"10px\",0],[5],null,[],[],1,[],[]],[[null,2,null,[],null,null,\"DIV#accordian>DIV.panel.panel-default>DIV.panel-heading>.panel-title\"],1,[\"10px\",\"10px\",0],[0],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-widget\"],1,[\"10px\",\"10px\",0],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"BODY>SECTION>DIV.container>DIV.row>DIV\"],3,[\"10px\",\"10px\",0],[0],null,[],[],1,[],[]]],[],[1779829599286],\"20260520_083439\",[],[[[[null,0,null,[],null,null,\"DIV#slider-carousel>DIV.carousel-inner>DIV.item.active.left>DIV\"],[null,null,null,[],null,null,\"P\"],null,[null,null,null,[],null,null,\"H1,H2,P\"]]]],[[null,[1,3,2,5],null,\"4334590153\",[],[],[0,2],null,null,[1,null,2,16,480,1],[]]],[null,[[1,\"1vp\",[[4,\"2vp\",\"2vp\"],[6,\"3vp\",\"3vp\"]],8,\"1vp\",0.30000001,[\"0.2vp\",\"0vp\",2]],[2,\"300px\",[[4,\"600px\",\"600px\"],[6,\"900px\",\"900px\"]],8,\"300px\",0.30000001,[\"60px\",\"0px\",2]]]],null,null,null,null,null,null,[null,null,null,null,null,null,null,null,null,null,null,0],null,null,[1,null,null,[]],null,[1188555880],null,null,[1779529042412],null,null,null,null,null,null,null,null,null,[[\"Toggle toolbar expansion\",\"Toggle privacy and legal settings display\",\"Dismiss privacy and legal settings display\"]]]"
+          "value": "[[[[null,1,null,[],null,null,\"BODY>SECTION>DIV.container>DIV.row\"],4,[\"10px\",\"10px\",0],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-bottom\"],2,[\"10px\",\"10px\",0],[5],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"BODY>FOOTER#footer\"],1,[\"10px\",\"10px\",0],[0],null,[],[],1,[],[2,4]],[[null,0,null,[],null,null,\"DIV#slider-carousel\"],4,[\"10px\",\"10px\",1],[1],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"SECTION#form\"],4,[\"10px\",\"185px\",1],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"BODY\"],3,[\"10px\",\"10px\",1],[5],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV#accordian>DIV.panel.panel-default>DIV.panel-heading>.panel-title\"],1,[\"10px\",\"30px\",1],[0],null,[],[],1,[],[]],[[null,1,null,[],null,null,\"DIV#accordian>DIV.panel.panel-default>DIV.panel-heading>.panel-title\"],1,[\"10px\",\"10px\",0],[0],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-widget>DIV.container>DIV.row\"],4,[\"10px\",\"10px\",0],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-bottom\"],4,[\"10px\",\"10px\",0],[5],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV#accordian\"],4,[\"10px\",\"35px\",0],[0],null,[],[],1,[],[]],[[null,1,null,[],null,null,\"BODY>SECTION>DIV.container\"],4,[\"10px\",\"10px\",0],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"BODY\"],2,[\"10px\",\"10px\",1],[4],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-bottom\"],3,[\"10px\",\"10px\",0],[5],null,[],[],1,[],[]],[[null,2,null,[],null,null,\"DIV#accordian>DIV.panel.panel-default>DIV.panel-heading>.panel-title\"],1,[\"10px\",\"10px\",0],[0],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"DIV.footer-widget\"],1,[\"10px\",\"10px\",0],[3],null,[],[],1,[],[]],[[null,0,null,[],null,null,\"BODY>SECTION>DIV.container>DIV.row>DIV\"],3,[\"10px\",\"10px\",0],[0],null,[],[],1,[],[]]],[],[1779833982224],\"20260520_083439\",[],[[[[null,0,null,[],null,null,\"DIV#slider-carousel>DIV.carousel-inner>DIV.item.active.left>DIV\"],[null,null,null,[],null,null,\"P\"],null,[null,null,null,[],null,null,\"H1,H2,P\"]]]],[[null,[1,3,2,5],null,\"4334590153\",[],[],[0,2],null,null,[1,null,2,16,480,1],[]]],[null,[[1,\"1vp\",[[4,\"2vp\",\"2vp\"],[6,\"3vp\",\"3vp\"]],8,\"1vp\",0.30000001,[\"0.2vp\",\"0vp\",2]],[2,\"300px\",[[4,\"600px\",\"600px\"],[6,\"900px\",\"900px\"]],8,\"300px\",0.30000001,[\"60px\",\"0px\",2]]]],null,null,null,null,null,null,[null,null,null,null,null,null,null,null,null,null,null,0],null,null,[1,null,null,[]],null,[1188555880],null,null,[1779529042412],null,null,null,null,null,null,null,null,null,[[\"Toggle toolbar expansion\",\"Toggle privacy and legal settings display\",\"Dismiss privacy and legal settings display\"]]]"
         }
       ]
     },
@@ -100,7 +100,7 @@
       "localStorage": [
         {
           "name": "rc::h",
-          "value": "1779743197922"
+          "value": "1779747580456"
         }
       ]
     }
