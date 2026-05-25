@@ -9,6 +9,8 @@ import { PlacedOrder } from '../pages/PlacedOrder';
 import { CardDetails } from '../pages/CardDetails';
 import { Checkout } from '../pages/Checkout';
 export { expect } from '@playwright/test';
+import { PlaywrightBlocker } from '@cliqz/adblocker-playwright';
+
 
 type MyFixtures = {
     homePage: HomePage;
@@ -72,10 +74,9 @@ export const test = base.extend<MyFixtures>({
         const context = await browser.newContext({
             storageState: "./setup/auth/user.json"
         });
-
-
-
         const page = await context.newPage();
+          const blocker = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
+         await blocker.enableBlockingInPage(page);
         await use(page);
         await context.close();
     }

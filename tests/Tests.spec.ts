@@ -157,7 +157,6 @@ test.describe("params", () => {
 
 
 test.describe("paramsCSV", () => {
-    
   for (const record of productData) 
    {
     test(`test ${record.name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
