@@ -11,7 +11,7 @@ async function globalSetup() {
     await page.waitForURL('https://www.automationexercise.com/');
 
     await page.context().storageState({
-        path: './setup/auth/user.json'
+        path: '../config/auth/user.json'
     });
 
     await browser.close();

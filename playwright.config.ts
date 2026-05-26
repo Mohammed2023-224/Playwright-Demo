@@ -27,7 +27,7 @@ loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environme
  */
 export default defineConfig({
   // Use a string path for globalSetup to avoid using `require` in TS
-  globalSetup: './setup/GlobalAuth',   // runs once before all tests
+  globalSetup: './utilities/GlobalAuth',   // runs once before all tests
 
 
   testDir: './tests',
