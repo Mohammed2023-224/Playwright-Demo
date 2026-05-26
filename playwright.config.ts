@@ -15,11 +15,12 @@ import { loadAllFilesWithCertainExtensionFromDir } from './utilities/ReadFiles';
 //   dotenv.config({ path: path.resolve(__dirname, 'UAT.env') });
 // }
 console.log(`Current NODE_ENV: ${process.env.NODE_ENV}`);
-if (process.env.NODE_ENV === '' || process.env.NODE_ENV === 'default') {
-loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environments/default/`), 'env');
+if (process.env.NODE_ENV !== '' && process.env.NODE_ENV !== undefined) {
+  loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environments/${process.env.NODE_ENV}/`), 'env');
 }
 else{
-loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environments/${process.env.NODE_ENV}/`), 'env');
+loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environments/default/`), 'env');
+
 }
 /**
  * See https://playwright.dev/docs/test-configuration.
