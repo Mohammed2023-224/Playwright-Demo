@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
-
+import dotenv from 'dotenv';
+import path from 'path';
+import { loadAllFilesWithCertainExtensionFromDir } from './utilities/ReadFiles';
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -7,13 +9,24 @@ import { defineConfig, devices } from '@playwright/test';
 // import dotenv from 'dotenv';
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
-
+// if(process.env.NODE_ENV === 'test') {
+//   dotenv.config({ path: path.resolve(__dirname, 'test.env') });
+// } else {
+//   dotenv.config({ path: path.resolve(__dirname, 'UAT.env') });
+// }
+console.log(`Current NODE_ENV: ${process.env.NODE_ENV}`);
+if (process.env.NODE_ENV === '' || process.env.NODE_ENV === 'default') {
+loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environments/default/`), 'env');
+}
+else{
+loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environments/${process.env.NODE_ENV}/`), 'env');
+}
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   // Use a string path for globalSetup to avoid using `require` in TS
-  globalSetup: 'setup/GlobalAuth',   // runs once before all tests
+  globalSetup: './setup/GlobalAuth',   // runs once before all tests
 
 
   testDir: './tests',

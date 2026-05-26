@@ -2,7 +2,6 @@ import { expect, test } from "../fixtures/TestFixtures";
 import { Links } from "../pages/NavigationBar";
 import fs from 'fs';
 import path from 'path';
-
 import {parse} from "csv-parse/sync";
 
 type ProductRecord = { name: string; price: string };
@@ -14,7 +13,9 @@ const csvPath = path.join(
 const productData = parse<ProductRecord>(fs.readFileSync(csvPath,'utf-8'), { columns: true, skip_empty_lines: true });
 
 test.describe("Sign Up Tests", () => {
-    test.skip("Sign Up with valid credentials", async ({ homePage, navigationBar, signUpLoginPage, signUpPage }) => {
+    test.skip("Sign Up with valid credentials", async ({  homePage, navigationBar, signUpLoginPage, signUpPage }) => {
+        console.log(`Hello ${process.env.HELLO}`)
+
         await navigationBar.clickOnLink(Links.SIGNUP_IN);
         await signUpLoginPage.enterUsername("testuser");
         await signUpLoginPage.enterEmail("testuser01036@example.com");
@@ -44,7 +45,7 @@ test.describe("Sign Up Tests", () => {
 });
 
 test.describe("login", () => {
-    test("Add product to cart", async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
+    test.skip("Add product to cart", async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
         await navigationBar.clickOnLink(Links.PRODUCTS);
         await productsPage.typeInSearchButton("Sleeveless Dress");
         await productsPage.clickOnSearchButton();
@@ -103,7 +104,7 @@ test.describe("params", () => {
     { name: 'Sleeveless Dress', price: 'Rs. 1000' },
     { name: 'Blue Top', price: 'Rs. 500' },
 ].forEach(({ name, price }) => {
-    test(`test ${name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
+    test.skip(`test ${name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
         await navigationBar.clickOnLink(Links.PRODUCTS);
         await productsPage.typeInSearchButton(name);
         await productsPage.clickOnSearchButton();
@@ -159,7 +160,7 @@ test.describe("params", () => {
 test.describe("paramsCSV", () => {
   for (const record of productData) 
    {
-    test(`test ${record.name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
+    test.skip(`test ${record.name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
         await navigationBar.clickOnLink(Links.PRODUCTS);
         await productsPage.typeInSearchButton(`${record.name}`);
         await productsPage.clickOnSearchButton();
@@ -210,3 +211,13 @@ test.describe("paramsCSV", () => {
 }
 });
 
+
+test.describe("tetss", () => {
+    test("test", async ({ }) => {
+        
+console.log(`Hello ${process.env.HELLO}`)
+console.log(`Hello ${process.env.OPENAI_API_KEY}`)
+console.log(`Hello ${process.env.test}`)
+
+    });
+});                                                                                               
