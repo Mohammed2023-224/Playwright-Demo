@@ -1,4 +1,5 @@
 import {Page} from "@playwright/test";  
+import {navigateToHomePage} from "../Actions/BrowserActions";
 
 export class HomePage {
     page: Page
@@ -7,6 +8,6 @@ export class HomePage {
     }
 
     async navigateToHomePage() {
-        await this.page.goto("https://www.automationexercise.com/");
+        await navigateToHomePage(this.page, "https://www.automationexercise.com/");
     }   
 }

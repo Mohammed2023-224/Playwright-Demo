@@ -161,7 +161,7 @@ test.describe("params", () => {
 test.describe("paramsCSV", () => {
   for (const record of productData) 
    {
-    test.skip(`test ${record.name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
+    test(`test ${record.name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
         await navigationBar.clickOnLink(Links.PRODUCTS);
         await productsPage.typeInSearchButton(`${record.name}`);
         await productsPage.clickOnSearchButton();

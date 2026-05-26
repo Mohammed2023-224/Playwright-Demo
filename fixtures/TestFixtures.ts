@@ -72,7 +72,7 @@ export const test = base.extend<MyFixtures>({
 
     userPage: async ({ browser }, use) => {
         const context = await browser.newContext({
-            storageState: "./setup/auth/user.json"
+            storageState: "../config/auth/user.json"
         });
         const page = await context.newPage();
           const blocker = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
