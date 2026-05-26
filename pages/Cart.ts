@@ -1,5 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { Table } from "./Table";
+import { clickOnElement } from "../Actions/ElementActions";
 
 export class Cart {
     page: Page;
@@ -15,7 +16,7 @@ export class Cart {
     // ---------- LOCATOR METHODS ----------
     //Action Methods
     async clickCheckoutButton() {
-        await this.checkoutButtonLocator.click();
+        await clickOnElement(this.checkoutButtonLocator);
     }
 
 }

@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from "@playwright/test";
+import { clickOnElement,getTextFromElement } from "../Actions/ElementActions";
 
 
 export class PlacedOrder {
@@ -18,20 +19,20 @@ export class PlacedOrder {
 
     // ---------- Action Methods ----------
     async clickDownloadInvoiceButton() {
-        await this.downloadInvoiceButtonLocator.click();
+        await clickOnElement(this.downloadInvoiceButtonLocator);
     }
 
     async clickContinueButton() {
-        await this.continueButtonLocator.click();
+        await clickOnElement(this.continueButtonLocator);
     }
 
     // ---------- Get Text Methods ----------
     async getPlacedOrderMessageText() {
-        return await this.placedOrderMessageLocator.textContent();
+        return await getTextFromElement(this.placedOrderMessageLocator);
     }
 
     async getPlacedOrderHeaderText() {
-        return await this.placedOrderHeader.textContent();
+        return await getTextFromElement(this.placedOrderHeader);
     }
 
 

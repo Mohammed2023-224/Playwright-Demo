@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import { clickOnElement } from "../Actions/ElementActions";
 
 export enum Links {
   HOME = "Home",
@@ -23,7 +24,7 @@ export class NavigationBar {
 
   // ---------- ACTION ----------
   async clickOnLink(link: Links) {
-    await this.getNavBarLocator(link).click();
+    await clickOnElement(this.getNavBarLocator(link));
   }
 
   // ---------- UTILS ----------

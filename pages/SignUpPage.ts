@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from "@playwright/test";
+import { clickOnElement, typeInElement,checkCheckBox,selectOption } from "../Actions/ElementActions";
 
 export class SignUpPage {
     page: Page;
@@ -55,14 +56,14 @@ export class SignUpPage {
     //Action Methods
     async selectGender(gender: "male" | "female") {
         if (gender === "male") {
-            await this.maleGenderRadioLocator.check();
+            await checkCheckBox(this.maleGenderRadioLocator);
         } else {
-            await this.femaleGenderRadioLocator.check();
+            await checkCheckBox(this.femaleGenderRadioLocator);
         }
     }
 
     async enterName(name: string) {
-        await this.nameInputLocator.fill(name);
+        await typeInElement(this.nameInputLocator, name);
     }
 
     async getEmailtext() {
@@ -70,41 +71,41 @@ export class SignUpPage {
     }
 
     async enterPassword(password: string) {
-        await this.passwordInputLocator.fill(password);
+        await typeInElement(this.passwordInputLocator, password);
     }
 
     async selectDateOfBirth(day: string, month: string, year: string) {
-        await this.dateOfBirthDayInputLocator.selectOption(day);
-        await this.dateOfBirthMonthInputLocator.selectOption(month);
-        await this.dateOfBirthYearInputLocator.selectOption(year);
+        await selectOption(this.dateOfBirthDayInputLocator, day);
+        await selectOption(this.dateOfBirthMonthInputLocator, month);
+        await selectOption(this.dateOfBirthYearInputLocator, year);
     }
 
     async checkNewsletterSubscription() {
-        await this.newLetterCheckboxLocator.check();
+        await checkCheckBox(this.newLetterCheckboxLocator);
     }
 
     async checkOffersSubscription() {
-        await this.offersCheckboxLocator.check();
+        await checkCheckBox(this.offersCheckboxLocator);
     }
 
     async enterFirstName(firstName: string) {
-        await this.firstNameInputLocator.fill(firstName);
+        await typeInElement(this.firstNameInputLocator, firstName);
     }
 
     async enterLastName(lastName: string) {
-        await this.lastNameInputLocator.fill(lastName);
+        await typeInElement(this.lastNameInputLocator, lastName);
     }
 
     async enterCompany(company: string) {
-        await this.companyInputLocator.fill(company);
+        await typeInElement(this.companyInputLocator, company);
     }
 
     async enterAddress1(address1: string) {
-        await this.address1InputLocator.fill(address1);
+        await typeInElement(this.address1InputLocator, address1);
     }
 
     async enterAddress2(address2: string) {
-        await this.address2InputLocator.fill(address2);
+        await typeInElement(this.address2InputLocator, address2);
     }
 
     async selectCountry(country: string) {
@@ -112,23 +113,23 @@ export class SignUpPage {
     }
 
     async enterState(state: string) {
-        await this.stateInputLocator.fill(state);
+        await typeInElement(this.stateInputLocator, state);
     }
 
     async enterCity(city: string) {
-        await this.cityInputLocator.fill(city);
+        await typeInElement(this.cityInputLocator, city);
     }
 
     async enterZipcode(zipcode: string) {
-        await this.zipcodeInputLocator.fill(zipcode);
+        await typeInElement(this.zipcodeInputLocator, zipcode);
     }
 
     async enterMobileNumber(mobileNumber: string) {
-        await this.mobileNumberInputLocator.fill(mobileNumber);
+        await typeInElement(this.mobileNumberInputLocator, mobileNumber);
     }
 
     async clickSignUpButton() {
-        await this.signUpButtonLocator.click();
+        await clickOnElement(this.signUpButtonLocator);
     }
 
     async getAccountCreatedMessageText() {
@@ -136,7 +137,7 @@ export class SignUpPage {
     }
 
     async clickContinueButton() {
-        await this.continueButtonLocator.click();
+        await clickOnElement(this.continueButtonLocator);
     }
 
 

@@ -1,4 +1,5 @@
 import { Page,Locator } from "@playwright/test";
+import {clickOnElement,typeInElement } from "../Actions/ElementActions";
 
 export class SignUpLoginPage {
     page: Page;
@@ -23,26 +24,26 @@ export class SignUpLoginPage {
 
     //Action Methods
     async enterUsername(username: string) {
-        await this.usernameInputLocator.fill(username);
+        await typeInElement(this.usernameInputLocator, username);
     }
 
     async enterEmail(email: string) {
-        await this.emailInputLocator.fill(email);
+        await typeInElement(this.emailInputLocator, email);
     }
 
         async enterLoginEmail(email: string) {
-        await this.loginEmailInputLocator.fill(email);
+        await typeInElement(this.loginEmailInputLocator, email);
     }
 
     async enterLoginPassword(password: string) {
-        await this.loginPasswordInputLocator.fill(password);
+        await typeInElement(this.loginPasswordInputLocator, password);
     }
 
     async clickSignUpButton() {
-        await this.signUpButtonLocator.click();
+        await clickOnElement(this.signUpButtonLocator);
     }
 
         async clickLoginButton() {
-        await this.loginButtonLocator.click();
+        await clickOnElement(this.loginButtonLocator);
     }
 }

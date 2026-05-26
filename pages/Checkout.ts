@@ -1,5 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { Table } from "./Table";
+import { clickOnElement, typeInElement ,getTextFromElement } from "../Actions/ElementActions";
 
 export class Checkout {
     page: Page;
@@ -27,145 +28,81 @@ export class Checkout {
 
     //Action Methods
     async clickPlaceOrderButton() {
-        await this.placeOrderButtonLocator.click();
+        await clickOnElement(this.placeOrderButtonLocator);
     }
 
     async enterMessage(message: string) {
-        await this.textareaMessageLocator.fill(message);
+        await typeInElement(this.textareaMessageLocator, message);
     }
 
 
     //get Text Methods
     //Invoice details
     async getInvoiceDetailsText() {
-        return (
-            await this.getListItemByclasss(
-                "address_title",
-                this.addressInvoiceDetailsLocator
-            ).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_title", this.addressInvoiceDetailsLocator));
     }
 
     async getInvoiceUserNameText() {
-        return (
-            await this.getListItemByclasss(
-                "address_firstname address_lastname",
-                this.addressInvoiceDetailsLocator
-            ).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_firstname address_lastname", this.addressInvoiceDetailsLocator));
+    
     }
 
     async getInvoiceOneText() {
-        return (
-            await this.getListItemByclasss(
-                "address_address1 address_address2",
-                this.addressInvoiceDetailsLocator
-            ).nth(0).textContent()
-        )?.trim();
+        return (await getTextFromElement(this.getListItemByclasss("address_address1 address_address2", this.addressInvoiceDetailsLocator).nth(0)))?.trim();
+
     }
 
     async getInvoiceOne2ndPartText() {
-        return (
-            await this.getListItemByclasss(
-                "address_address1 address_address2",
-                this.addressInvoiceDetailsLocator
-            ).nth(1).textContent()
-        )?.trim();
+        return (await getTextFromElement(this.getListItemByclasss("address_address1 address_address2", this.addressInvoiceDetailsLocator).nth(1)))?.trim();
     }
 
     async getInvoiceCityStatePostalCodeText() {
-        return (
-            (await this.getListItemByclasss(
-                "address_city address_state_name address_postcode",
-                this.addressInvoiceDetailsLocator
-            ).textContent())?.replace(/\s+/g, " ")
-        )?.trim();
+        return (await getTextFromElement(this.getListItemByclasss("address_city address_state_name address_postcode", this.addressInvoiceDetailsLocator)))?.replace(/\s+/g, " ").trim();
     }
 
     async getInvoiceCountryText() {
-        return (
-            await this.getListItemByclasss(
-                "address_country_name",
-                this.addressInvoiceDetailsLocator
-            ).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_country_name", this.addressInvoiceDetailsLocator));
     }
 
     async getInvoicePhoneText() {
-        return (
-            await this.getListItemByclasss(
-                "address_phone",
-                this.addressInvoiceDetailsLocator
-            ).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_phone", this.addressInvoiceDetailsLocator));
     }
 
     //Address details
     async getAddressDetailsText() {
-        return (
-            await this.getListItemByclasss(
-                "address_title",
-                this.addressDetailsLocator
-            ).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_title", this.addressDetailsLocator));
+
     }
 
     async getAddressUserNameText() {
-        return (
-            await this.getListItemByclasss(
-                "address_firstname address_lastname",
-                this.addressDetailsLocator
-            ).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_firstname address_lastname", this.addressDetailsLocator));
+
     }
 
     async getAddressOneText() {
-        return (
-            await this.getListItemByclasss(
-                "address_address1 address_address2",
-                this.addressDetailsLocator
-            ).nth(0).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_address1 address_address2", this.addressDetailsLocator).nth(0));
     }
 
     async getAddressOne2ndPartText() {
-        return (
-            await this.getListItemByclasss(
-                "address_address1 address_address2",
-                this.addressDetailsLocator
-            ).nth(1).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_address1 address_address2", this.addressDetailsLocator).nth(1));
     }
 
     async getAddressCityStatePostalCodeText() {
-        return (
-            (await this.getListItemByclasss(
-                "address_city address_state_name address_postcode",
-                this.addressDetailsLocator
-            ).textContent())?.replace(/\s+/g, " ")
-        )?.trim();
+        return (await getTextFromElement(this.getListItemByclasss("address_city address_state_name address_postcode", this.addressDetailsLocator)))?.replace(/\s+/g, " ").trim();
     }
 
     async getAddressCountryText() {
-        return (
-            await this.getListItemByclasss(
-                "address_country_name",
-                this.addressDetailsLocator
-            ).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_country_name", this.addressDetailsLocator));
+
     }
 
     async getAddressPhoneText() {
-        return (
-            await this.getListItemByclasss(
-                "address_phone",
-                this.addressDetailsLocator
-            ).textContent()
-        )?.trim();
+        return await getTextFromElement(this.getListItemByclasss("address_phone", this.addressDetailsLocator));
     }
 
     async getCartTotalPriceText() {
-        return await this.cartTotalPriceLocator.textContent();
+        return await getTextFromElement(this.cartTotalPriceLocator);
+   
     }
 
     getTotalPrice() {

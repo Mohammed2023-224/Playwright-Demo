@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from "@playwright/test";
+import { getTextFromElement } from "../Actions/ElementActions";
 
 
 export class Table {
@@ -59,15 +60,16 @@ export class Table {
     }
 
     async getProductPrice(productName: string) {
-        return await (this.getProductPriceByProductName(productName).textContent()).toString().trim();
+        return getTextFromElement(this.getProductPriceByProductName(productName));
     }
 
     async getProductQuantity(productName: string) {
-        return await this.getProductQuantityByProductName(productName).textContent().toString().trim();
+        return getTextFromElement(this.getProductQuantityByProductName(productName));
     }
 
     //Assertion methods
     async ValidateProductPrice(productName: string, expectedPrice: string) {
+    
         await expect(this.getProductPriceByProductName(productName)).toHaveText(new RegExp(expectedPrice));
     }
 

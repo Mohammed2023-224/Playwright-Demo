@@ -1,4 +1,5 @@
 import { Page, Locator } from "@playwright/test";
+import { clickOnElement,hoverOverElement,typeInElement } from "../Actions/ElementActions"; 
 
 export class Products {
     page: Page;
@@ -46,27 +47,27 @@ export class Products {
     // ---------- ACTION METHODS ----------
 
     async clickAddToCartButton(option: string, index: number) {
-        await this.getAddToCartButton(option, index).click();
+        await clickOnElement(this.getAddToCartButton(option, index));
     }
 
         async hoverAddToCartButton(option: string, index: number) {
-        await this.getAddToCartButton(option, index).hover();
+        await hoverOverElement(this.getAddToCartButton(option, index));
     }
 
 
     async clickViewCartButton() {
-        await this.viewCartButtonLocator.click();
+        await clickOnElement(this.viewCartButtonLocator);
     }
 
     async clickViewProductButton(option: string) {
-        await this.getViewProductButton(option).click();
+        await clickOnElement(this.getViewProductButton(option));
     }
 
     async clickOnSearchButton() {
-        await this.searchButtonLocator.click();
+        await clickOnElement(this.searchButtonLocator);
     }
 
     async typeInSearchButton(option: string) {
-        await this.searchInputLocator.fill(option);
+        await typeInElement(this.searchInputLocator, option);
     }
 }
