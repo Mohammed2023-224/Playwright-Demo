@@ -3,6 +3,7 @@ import { Links } from "../pages/NavigationBar";
 import fs from 'fs';
 import path from 'path';
 import {parse} from "csv-parse/sync";
+import {generateFakeName, generateFakeEmail} from "../utilities/GenerateFakeData";
 
 type ProductRecord = { name: string; price: string };
 
@@ -218,6 +219,11 @@ test.describe("tetss", () => {
 console.log(`Hello ${process.env.HELLO}`)
 console.log(`Hello ${process.env.OPENAI_API_KEY}`)
 console.log(`Hello ${process.env.test}`)
-
+console.log(`Hello ${generateFakeName()}`)
+console.log(`Hello ${generateFakeEmail()}`)
+console.log(`Hello ${generateFakeName()}`)
+console.log(`Hello ${generateFakeEmail()}`)
+console.log(`Hello ${generateFakeName()}`)
+console.log(`Hello ${generateFakeEmail()}`)
     });
 });                                                                                               
