@@ -8,7 +8,6 @@ import { SignUpPage } from '../pages/SignUpPage';
 import { PlacedOrder } from '../pages/PlacedOrder';
 import { CardDetails } from '../pages/CardDetails';
 import { Checkout } from '../pages/Checkout';
-export { expect } from '@playwright/test';
 import { PlaywrightBlocker } from '@cliqz/adblocker-playwright';
 
 

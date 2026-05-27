@@ -1,6 +1,7 @@
 import { chromium } from '@playwright/test';
+import { request } from '@playwright/test';
 
-async function globalSetup() {
+async function globalSetupUI() {
     const browser = await chromium.launch();
     const page = await browser.newPage();
 
@@ -17,4 +18,28 @@ async function globalSetup() {
     await browser.close();
 }
 
-export default globalSetup;
+async function globalSetupAPI() {
+    const requestContext = await request.newContext();
+    await requestContext.post(
+        'https://www.automationexercise.com/login',
+        {
+            form: {
+                email: 'testuser01030@example.com',
+                password: 'password123',
+            }
+        }
+    );
+
+    await requestContext.storageState({
+        path: './config/auth/apiUser.json'
+    });
+
+    await requestContext.dispose();
+}
+
+
+async function setup() {
+    await globalSetupUI();
+    await globalSetupAPI();
+}
+export default  setup ;

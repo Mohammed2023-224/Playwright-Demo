@@ -27,12 +27,12 @@ loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environme
  */
 export default defineConfig({
   // Use a string path for globalSetup to avoid using `require` in TS
-  globalSetup: './utilities/GlobalAuth',   // runs once before all tests
+  globalSetup: './utilities/GlobalAuth',  // runs once before all tests
 
 
   testDir: './tests',
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   // forbidOnly: !!process.env.CI,
   // /* Retry on CI only */
