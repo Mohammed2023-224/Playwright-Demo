@@ -1,7 +1,7 @@
 import { APIRequestContext, request } from '@playwright/test';
 
 export async function performGetCall(url: string,requestContext: APIRequestContext, options:
-    { headers?: Record<string, string>, cookies?: Record<string, string> } = {}) {
+    { headers?: Record<string, string>, cookies?: Record<string, string>,params?:Record<string, string | number | boolean> } = {}) {
     const { headers, cookies } = options;
     const mainRequestContext = requestContext ? requestContext : await request.newContext();
 
@@ -19,7 +19,7 @@ export async function performGetCall(url: string,requestContext: APIRequestConte
 export async function performPostCall(url: string, requestContext: APIRequestContext, options:
     {
         headers?: Record<string, string>, cookies?: Record<string, string>, form?: Record<string, string>
-            , json?: Record<string, any>, multipart?: Record<string, any>
+            , json?: Record<string, any>, multipart?: Record<string, any>,params?:Record<string, string | number | boolean>
     } = {}) {
     const { headers, cookies, form, json, multipart } = options;
     const mainRequestContext = requestContext ? requestContext : await request.newContext();
