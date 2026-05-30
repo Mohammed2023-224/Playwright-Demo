@@ -1,23 +1,21 @@
 import { test } from "../fixtures/ApiFixtures";
+import {performGetCall} from "../Actions/StatelessAPIActions";
 
 
 
 
 test.describe("API Tests", () => {
     test("Login API Test", async ({ apiRequest }) => {
-        const response = await apiRequest.get('https://automationexercise.com/products');
+        const response =  await performGetCall('products', apiRequest);
         console.log(response.status());
-        const response1 = await apiRequest.get('https://automationexercise.com/add_to_cart/1');
+        const response1 = await performGetCall('products', apiRequest); 
         console.log(response1.status());
-        console.log(await response1.text());
-        const response2 = await apiRequest.get('https://automationexercise.com/view_cart');
+        const response2 = await performGetCall('view_cart', apiRequest);
         console.log(response2.status());
-        const response3 = await apiRequest.get('https://automationexercise.com/checkout');
+        const response3 = await performGetCall('checkout', apiRequest);
         console.log(response3.status());
-        console.log(await response3.text());
-        const response4 = await apiRequest.get('https://automationexercise.com/payment');
+        const response4 = await performGetCall('payment', apiRequest);
         console.log(response4.status());
-        console.log(await response4.text());
         // const responseData = await response.json();
     });
 });

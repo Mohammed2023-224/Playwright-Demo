@@ -10,7 +10,7 @@ export const test = base.extend<MyFixtures>({
     apiRequest: async ({}, use) => {
 
         const requestContext = await request.newContext({
-            storageState: './config/auth/User.json'
+            baseURL: 'https://www.automationexercise.com/',
         });
 
         await use(requestContext);
