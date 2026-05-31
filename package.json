@@ -11,7 +11,8 @@
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
     "@playwright/test": "^1.60.0",
-    "@types/node": "^25.9.1"
+    "@types/node": "^25.9.1",
+    "playwright-schema-validator": "^1.0.0"
   },
   "dependencies": {
     "@cliqz/adblocker-playwright": "^1.34.0",

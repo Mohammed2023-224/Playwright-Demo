@@ -1,6 +1,7 @@
 import { test } from "../fixtures/ApiFixtures";
 import { performGetCall } from "../Actions/StatelessAPIActions";
 import { expect } from "@playwright/test";
+import { validateSchema } from 'playwright-schema-validator';
 
 
 
@@ -137,12 +138,61 @@ test.describe("Pet swagger store", () => {
 
     test("Full e2e", async ({ petAPIRequest }) => {
         const id = 9999;
+        const petSchema = {
+    type: 'object',
+    properties: {
+        id: { type: 'number' },
+        category: {
+            type: 'object',
+            properties: {
+                id: { type: 'number' },
+                name: { type: 'string' }
+            },
+            required: ['id', 'name']
+        },
+        name: { type: 'string' },
+        photoUrls: {
+            type: 'array',
+            items: { type: 'string' }
+        },
+        tags: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    id: { type: 'number' },
+                    name: { type: 'string' }
+                },
+                required: ['id', 'name']
+            }
+        },
+        status: { 
+            type: 'string',
+            enum: ['available', 'pending', 'sold']  // Valid status values
+        }
+    },
+    required: ['id', 'name']  // Only id and name are required, others optional
+};
+
+const notFoundScheme = {
+    type: 'object',
+    properties: {
+        code: { type: 'number' },
+        type: { type: 'string' },
+        message: { type: 'string' }
+    },
+    required: ['code', 'type', 'message']
+};
         let response = await petAPIRequest.get(`pet/${id}`);
         console.log((await response.text()));
         console.log((response.status()));
         let res = JSON.parse(await response.text());
+            
         console.log(res.code);
         console.log(res.type);
+        let responseBody = await response.json();
+        await validateSchema({petAPIRequest},responseBody,notFoundScheme)
+
 console.log("========================== after get requests");
         if (res?.type?.includes("error") && res?.message?.includes("Pet not found")) {
             response = await petAPIRequest.post("pet", {
@@ -170,6 +220,8 @@ console.log("========================== after get requests");
             res = JSON.parse(await response.text());
             console.log(res.status)
         }
+        responseBody = await response.json();
+        await validateSchema({petAPIRequest},responseBody,petSchema)
 console.log("========================== after post ");
 
         response = await petAPIRequest.get("pet/9998");
