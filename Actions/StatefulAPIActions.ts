@@ -5,7 +5,7 @@ import { ReadStream } from "fs";
 type Headers = Record<string, string>;
 type Cookies = Record<string, string>;
 type QueryParams = Record<string, string | number | boolean | string[]>;
-type MultipartBody = Record<string, string | number | boolean | Buffer | ReadStream | Record<string, string>>;
+type MultipartBody = Record<string, string | number | boolean | Buffer | ReadStream | { name: string; mimeType: string; buffer: Buffer } | { name: string; mimeType: string; buffer: string }>;
 type RequestBody =
     | { type?: "none"; body?: undefined }
     | { type: "json"; body: Record<string, any> }
@@ -43,6 +43,9 @@ export class ApiClient {
         });
     }
 
+    setBaseURL(url:string){
+        this.baseUrl=url;
+    }
 
     // ----------------------------
     // HEADERS (GLOBAL)
@@ -117,9 +120,30 @@ export class ApiClient {
 
         if (type === "json") payload.data = body;
         if (type === "form") payload.form = body;
-        if (type === "multipart") payload.multipart = body;
+        if (type === "multipart") {  const multipartData: Record<string, any> = {};
+        
+        for (const [key, value] of Object.entries(body || {})) {
+            if (value && typeof value === 'object' && 'buffer' in value) {
+                // Handle file object with buffer
+                const fileObj = value as any;
+                multipartData[key] = {
+                    name: fileObj.name || 'file',
+                    mimeType: fileObj.mimeType || 'application/octet-stream',
+                    buffer: Buffer.isBuffer(fileObj.buffer) ? fileObj.buffer : Buffer.from(fileObj.buffer)
+                };
+            } else if (Buffer.isBuffer(value)) {
+                // Handle direct Buffer
+                multipartData[key] = value;
+            } else {
+                // Handle regular values
+                multipartData[key] = value;
+            }
+        }
+        
+        payload.multipart = multipartData;
+    };
 
-        const methodName = method.toLowerCase() as 'get' | 'post' | 'put' | 'delete' | 'patch';
+const methodName = method.toLowerCase() as 'get' | 'post' | 'put' | 'delete' | 'patch';
         return this.context[methodName](url, {
             headers: mergedHeaders, params:queryParams,
             ...payload,
@@ -129,11 +153,11 @@ export class ApiClient {
     // ----------------------------
     // PUBLIC METHODS
     // ----------------------------
-    get(endpoint?: string, options?: ApiOptions) {
+    async get(endpoint?: string, options?: ApiOptions) {
         this.validateInit();
         const url = endpoint ? `${this.baseUrl}${endpoint}` : this.baseUrl;
         this.validateURL(url);
-        return this.request("GET", url, options);
+        return await this.request("GET", url, options);
     }
 
     post(endpoint?: string, options?: ApiOptions) {

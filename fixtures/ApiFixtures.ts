@@ -1,9 +1,11 @@
 import { test as base } from '@playwright/test';
 import { APIRequestContext ,request } from '@playwright/test';
+import {ApiClient} from '../Actions/StatefulAPIActions'
 
 
 type MyFixtures = {
-    apiRequest: APIRequestContext;
+    apiRequest: APIRequestContext,
+    petAPIRequest:ApiClient;
 }
 
 export const test = base.extend<MyFixtures>({
@@ -17,4 +19,12 @@ export const test = base.extend<MyFixtures>({
 
         await requestContext.dispose();
     }
+    ,
+    petAPIRequest:async ({}, use) => {
+        const requestContext = new ApiClient(); 
+        await requestContext.init( {baseUrl:"https://petstore.swagger.io/v2/"});
+        await use(requestContext);
+        await requestContext.dispose();
+    }
+    
 });
