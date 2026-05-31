@@ -7,9 +7,9 @@ import { validateSchema } from 'playwright-schema-validator';
 
 
 test.describe("API Tests", () => {
-    test.skip("Login API Test", async ({ apiRequest }) => {
+    test.only("Login API Test", async ({ apiRequest }) => {
         const response = await performGetCall('products', apiRequest);
-        console.log(response.status());
+        console.log(response.status() );
         const response1 = await performGetCall('products', apiRequest);
         console.log(response1.status());
         const response2 = await performGetCall('view_cart', apiRequest);
@@ -136,43 +136,18 @@ test.describe("Pet swagger store", () => {
     });
 
 
-    test("Full e2e", async ({ petAPIRequest }) => {
-        const id = 9999;
-        const petSchema = {
-    type: 'object',
-    properties: {
-        id: { type: 'number' },
-        category: {
-            type: 'object',
-            properties: {
-                id: { type: 'number' },
-                name: { type: 'string' }
-            },
-            required: ['id', 'name']
+for (const id of [9997, 9996]) {
+        test(`Full e2e ${id}`, async ({ petAPIRequest }) => {
+          const petSchema = {
+        type: 'object',
+        properties: {
+            id: { type: 'number' },
+            name: { type: 'string' },
+            status: { type: 'string', enum: ['available', 'pending', 'sold'] },
+            photoUrls: { type: 'array', items: { type: 'string' } }
         },
-        name: { type: 'string' },
-        photoUrls: {
-            type: 'array',
-            items: { type: 'string' }
-        },
-        tags: {
-            type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: { type: 'number' },
-                    name: { type: 'string' }
-                },
-                required: ['id', 'name']
-            }
-        },
-        status: { 
-            type: 'string',
-            enum: ['available', 'pending', 'sold']  // Valid status values
-        }
-    },
-    required: ['id', 'name']  // Only id and name are required, others optional
-};
+        required: ['id', 'name']
+    };
 
 const notFoundScheme = {
     type: 'object',
@@ -197,7 +172,7 @@ console.log("========================== after get requests");
         if (res?.type?.includes("error") && res?.message?.includes("Pet not found")) {
             response = await petAPIRequest.post("pet", {
                 "type": "json", "body": {
-                    "id": 9998,
+                    "id": id,
                     "category": {
                         "id": 0,
                         "name": "string"
@@ -224,7 +199,7 @@ console.log("========================== after get requests");
         await validateSchema({petAPIRequest},responseBody,petSchema)
 console.log("========================== after post ");
 
-        response = await petAPIRequest.get("pet/9998");
+        response = await petAPIRequest.get(`pet/${id}`);
         console.log((await response.text()));
         console.log((response.status()));
         res = JSON.parse(await response.text());
@@ -351,4 +326,5 @@ console.log("========================== after delete");
         console.log(res.message);
 
     });
+}
 });

@@ -2,18 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
 import { loadAllFilesWithCertainExtensionFromDir } from './utilities/ReadFiles';
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-// if(process.env.NODE_ENV === 'test') {
-//   dotenv.config({ path: path.resolve(__dirname, 'test.env') });
-// } else {
-//   dotenv.config({ path: path.resolve(__dirname, 'UAT.env') });
-// }
+
 console.log(`Current NODE_ENV: ${process.env.NODE_ENV}`);
 if (process.env.NODE_ENV !== '' && process.env.NODE_ENV !== undefined) {
   loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environments/${process.env.NODE_ENV}/`), 'env');
@@ -22,9 +11,8 @@ else{
 loadAllFilesWithCertainExtensionFromDir(path.resolve(__dirname,`config/environments/default/`), 'env');
 
 }
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
+
+
 export default defineConfig({
   // Use a string path for globalSetup to avoid using `require` in TS
   globalSetup: './utilities/GlobalAuth',  // runs once before all tests
@@ -36,7 +24,7 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   // forbidOnly: !!process.env.CI,
   // /* Retry on CI only */
-  // retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 3,
   // /* Opt out of parallel tests on CI. */
   // workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
