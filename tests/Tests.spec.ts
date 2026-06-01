@@ -1,20 +1,20 @@
-import {  test } from "../fixtures/TestFixtures";
+import { test } from "../fixtures/TestFixtures";
 import { Links } from "../pages/NavigationBar";
 import fs from 'fs';
 import path from 'path';
-import {parse} from "csv-parse/sync";
-import {generateFakeName, generateFakeEmail} from "../utilities/GenerateFakeData";
+import { parse } from "csv-parse/sync";
+import { generateFakeName, generateFakeEmail } from "../utilities/GenerateFakeData";
 
 type ProductRecord = { name: string; price: string };
 
 const csvPath = path.join(
-  __dirname,
-  '../resources/testData.csv'
+    __dirname,
+    '../resources/testData.csv'
 );
-const productData = parse<ProductRecord>(fs.readFileSync(csvPath,'utf-8'), { columns: true, skip_empty_lines: true });
+const productData = parse<ProductRecord>(fs.readFileSync(csvPath, 'utf-8'), { columns: true, skip_empty_lines: true });
 
 test.describe("Sign Up Tests", () => {
-    test.skip("Sign Up with valid credentials", async ({  homePage, navigationBar, signUpLoginPage, signUpPage }) => {
+    test.only("Sign Up with valid credentials", async ({ homePage, navigationBar, signUpLoginPage, signUpPage }) => {
         console.log(`Hello ${process.env.HELLO}`)
 
         await navigationBar.clickOnLink(Links.SIGNUP_IN);
@@ -46,10 +46,44 @@ test.describe("Sign Up Tests", () => {
 });
 
 test.describe("login", () => {
-    test.skip("Add product to cart", async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
+    test("Add product to cart", async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
+
+        await homePage.page.route("**/add_to_cart/1", async route => {
+            // Only intercept POST requests to the API endpoint
+            if (route.request().method() === 'POST' &&
+                route.request().url().includes('/add_to_cart')) {
+                await route.continue();
+            } else {
+                await route.continue();
+            }
+        });
+
+        // ✅ Fulfill with proper response, not just error
+        await homePage.page.route("**/view_cart", async route => {
+            console.log("View cart intercepted - returning 500");
+            await route.fulfill({
+                status: 500,
+                contentType: 'application/json',
+                body: JSON.stringify({ error: 'Database connection failed' })
+            });
+        });
+        homePage.page.route("**/static/*", async route => {
+            console.log("Having fun here aborting ");
+            await route.abort()
+        }
+        )
+        homePage.page.route("**/css/**", async route => {
+            console.log("Having fun here aborting2 ");
+            await route.abort()
+        }
+        )
+
         await navigationBar.clickOnLink(Links.PRODUCTS);
+        await homePage.page.waitForLoadState('networkidle');
+
         await productsPage.typeInSearchButton("Sleeveless Dress");
         await productsPage.clickOnSearchButton();
+        await homePage.page.waitForLoadState('networkidle');
         await productsPage.hoverAddToCartButton("Sleeveless Dress", 1);
         await productsPage.clickAddToCartButton("Sleeveless Dress", 1);
         await productsPage.clickViewCartButton();
@@ -100,130 +134,129 @@ test.describe("login", () => {
 
 
 test.describe("params", () => {
-    
-[
-    { name: 'Sleeveless Dress', price: 'Rs. 1000' },
-    { name: 'Blue Top', price: 'Rs. 500' },
-].forEach(({ name, price }) => {
-    test.skip(`test ${name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
-        await navigationBar.clickOnLink(Links.PRODUCTS);
-        await productsPage.typeInSearchButton(name);
-        await productsPage.clickOnSearchButton();
-        await productsPage.hoverAddToCartButton(name, 1);
-        await productsPage.clickAddToCartButton(name, 1);
-        await productsPage.clickViewCartButton();
-        await cartPage.table.validateProductInCart(name, true);
-        await cartPage.table.ValidateProductPrice(name, price);
-        await cartPage.table.ValidateProductQuantity(name, "1");
-        await cartPage.table.ValidateProductName(name);
-        await cartPage.clickCheckoutButton();
-        await checkoutPage.table.validateProductInCart(name, true);
-        await checkoutPage.table.ValidateProductPrice(name, price);
-        await checkoutPage.table.ValidateProductQuantity(name, "1");
-        await checkoutPage.table.ValidateProductName(name);
-        // await checkoutPage.ValidateTotalPrice(1000);
-        await checkoutPage.validateAddressDetails({
-            title: "Your delivery address",
-            userName: "Mr. Test User",
-            addressOne: "Test Company",
-            addressOne2ndPart: "123 Test Street",
-            cityStatePostalCode: "Test City Test State 12345",
-            country: "United States",
-            phone: "1234567890"
-        });
 
-        await checkoutPage.validateInvoiceDetails({
-            title: "Your billing address",
-            userName: "Mr. Test User",
-            addressOne: "Test Company",
-            addressOne2ndPart: "123 Test Street",
-            cityStatePostalCode: "Test City Test State 12345",
-            country: "United States",
-            phone: "1234567890"
+    [
+        { name: 'Sleeveless Dress', price: 'Rs. 1000' },
+        { name: 'Blue Top', price: 'Rs. 500' },
+    ].forEach(({ name, price }) => {
+        test.skip(`test ${name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
+            await navigationBar.clickOnLink(Links.PRODUCTS);
+            await productsPage.typeInSearchButton(name);
+            await productsPage.clickOnSearchButton();
+            await productsPage.hoverAddToCartButton(name, 1);
+            await productsPage.clickAddToCartButton(name, 1);
+            await productsPage.clickViewCartButton();
+            await cartPage.table.validateProductInCart(name, true);
+            await cartPage.table.ValidateProductPrice(name, price);
+            await cartPage.table.ValidateProductQuantity(name, "1");
+            await cartPage.table.ValidateProductName(name);
+            await cartPage.clickCheckoutButton();
+            await checkoutPage.table.validateProductInCart(name, true);
+            await checkoutPage.table.ValidateProductPrice(name, price);
+            await checkoutPage.table.ValidateProductQuantity(name, "1");
+            await checkoutPage.table.ValidateProductName(name);
+            // await checkoutPage.ValidateTotalPrice(1000);
+            await checkoutPage.validateAddressDetails({
+                title: "Your delivery address",
+                userName: "Mr. Test User",
+                addressOne: "Test Company",
+                addressOne2ndPart: "123 Test Street",
+                cityStatePostalCode: "Test City Test State 12345",
+                country: "United States",
+                phone: "1234567890"
+            });
+
+            await checkoutPage.validateInvoiceDetails({
+                title: "Your billing address",
+                userName: "Mr. Test User",
+                addressOne: "Test Company",
+                addressOne2ndPart: "123 Test Street",
+                cityStatePostalCode: "Test City Test State 12345",
+                country: "United States",
+                phone: "1234567890"
+            });
+            await checkoutPage.clickPlaceOrderButton();
+            await cardDetails.enterCardNumber("1234 5678 9012 3456");
+            await cardDetails.enterNameOnCard("Test User");
+            await cardDetails.enterExpirationMonth("01");
+            await cardDetails.enterExpirationYear("2025");
+            await cardDetails.enterCVC("123");
+            await cardDetails.clickPaymentButton();
+            await placedOrder.assertPlacedOrderMessage("Congratulations! Your order has been confirmed!");
+            await placedOrder.assertPlacedOrderHeader("Order Placed!");
+            await placedOrder.clickContinueButton();
+            await placedOrder.assertContinueButtonNavigation("https://www.automationexercise.com/");
         });
-        await checkoutPage.clickPlaceOrderButton();
-        await cardDetails.enterCardNumber("1234 5678 9012 3456");
-        await cardDetails.enterNameOnCard("Test User");
-        await cardDetails.enterExpirationMonth("01");
-        await cardDetails.enterExpirationYear("2025");
-        await cardDetails.enterCVC("123");
-        await cardDetails.clickPaymentButton();
-        await placedOrder.assertPlacedOrderMessage("Congratulations! Your order has been confirmed!");
-        await placedOrder.assertPlacedOrderHeader("Order Placed!");
-        await placedOrder.clickContinueButton();
-        await placedOrder.assertContinueButtonNavigation("https://www.automationexercise.com/");
-    });
-})
+    })
 });
 
 
 
 test.describe("paramsCSV", () => {
-  for (const record of productData) 
-   {
-    test(`test ${record.name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
-        await navigationBar.clickOnLink(Links.PRODUCTS);
-        await productsPage.typeInSearchButton(`${record.name}`);
-        await productsPage.clickOnSearchButton();
-        await productsPage.hoverAddToCartButton(`${record.name}`, 1);
-        await productsPage.clickAddToCartButton(`${record.name}`, 1);
-        await productsPage.clickViewCartButton();
-        await cartPage.table.validateProductInCart(`${record.name}`, true);
-        await cartPage.table.ValidateProductPrice(`${record.name}`, `${record.price}`);
-        await cartPage.table.ValidateProductQuantity(`${record.name}`, "1");
-        await cartPage.table.ValidateProductName(`${record.name}`);
-        await cartPage.clickCheckoutButton();
-        await checkoutPage.table.validateProductInCart(`${record.name}`, true);
-        await checkoutPage.table.ValidateProductPrice(`${record.name}`, `${record.price}`);
-        await checkoutPage.table.ValidateProductQuantity(`${record.name}`, "1");
-        await checkoutPage.table.ValidateProductName(`${record.name}`);
-        // await checkoutPage.ValidateTotalPrice(1000);
-        await checkoutPage.validateAddressDetails({
-            title: "Your delivery address",
-            userName: "Mr. Test User",
-            addressOne: "Test Company",
-            addressOne2ndPart: "123 Test Street",
-            cityStatePostalCode: "Test City Test State 12345",
-            country: "United States",
-            phone: "1234567890"
-        });
+    for (const record of productData) {
+        test(`test ${record.name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
+            await navigationBar.clickOnLink(Links.PRODUCTS);
+            await productsPage.typeInSearchButton(`${record.name}`);
+            await productsPage.clickOnSearchButton();
+            await productsPage.hoverAddToCartButton(`${record.name}`, 1);
+            await productsPage.clickAddToCartButton(`${record.name}`, 1);
+            await productsPage.clickViewCartButton();
+            await cartPage.table.validateProductInCart(`${record.name}`, true);
+            await cartPage.table.ValidateProductPrice(`${record.name}`, `${record.price}`);
+            await cartPage.table.ValidateProductQuantity(`${record.name}`, "1");
+            await cartPage.table.ValidateProductName(`${record.name}`);
+            await cartPage.clickCheckoutButton();
+            await checkoutPage.table.validateProductInCart(`${record.name}`, true);
+            await checkoutPage.table.ValidateProductPrice(`${record.name}`, `${record.price}`);
+            await checkoutPage.table.ValidateProductQuantity(`${record.name}`, "1");
+            await checkoutPage.table.ValidateProductName(`${record.name}`);
+            // await checkoutPage.ValidateTotalPrice(1000);
+            await checkoutPage.validateAddressDetails({
+                title: "Your delivery address",
+                userName: "Mr. Test User",
+                addressOne: "Test Company",
+                addressOne2ndPart: "123 Test Street",
+                cityStatePostalCode: "Test City Test State 12345",
+                country: "United States",
+                phone: "1234567890"
+            });
 
-        await checkoutPage.validateInvoiceDetails({
-            title: "Your billing address",
-            userName: "Mr. Test User",
-            addressOne: "Test Company",
-            addressOne2ndPart: "123 Test Street",
-            cityStatePostalCode: "Test City Test State 12345",
-            country: "United States",
-            phone: "1234567890"
+            await checkoutPage.validateInvoiceDetails({
+                title: "Your billing address",
+                userName: "Mr. Test User",
+                addressOne: "Test Company",
+                addressOne2ndPart: "123 Test Street",
+                cityStatePostalCode: "Test City Test State 12345",
+                country: "United States",
+                phone: "1234567890"
+            });
+            await checkoutPage.clickPlaceOrderButton();
+            await cardDetails.enterCardNumber("1234 5678 9012 3456");
+            await cardDetails.enterNameOnCard("Test User");
+            await cardDetails.enterExpirationMonth("01");
+            await cardDetails.enterExpirationYear("2025");
+            await cardDetails.enterCVC("123");
+            await cardDetails.clickPaymentButton();
+            await placedOrder.assertPlacedOrderMessage("Congratulations! Your order has been confirmed!");
+            await placedOrder.assertPlacedOrderHeader("Order Placed!");
+            await placedOrder.clickContinueButton();
+            await placedOrder.assertContinueButtonNavigation("https://www.automationexercise.com/");
         });
-        await checkoutPage.clickPlaceOrderButton();
-        await cardDetails.enterCardNumber("1234 5678 9012 3456");
-        await cardDetails.enterNameOnCard("Test User");
-        await cardDetails.enterExpirationMonth("01");
-        await cardDetails.enterExpirationYear("2025");
-        await cardDetails.enterCVC("123");
-        await cardDetails.clickPaymentButton();
-        await placedOrder.assertPlacedOrderMessage("Congratulations! Your order has been confirmed!");
-        await placedOrder.assertPlacedOrderHeader("Order Placed!");
-        await placedOrder.clickContinueButton();
-        await placedOrder.assertContinueButtonNavigation("https://www.automationexercise.com/");
-    });
-}
+    }
 });
 
 
 test.describe("tetss", () => {
     test("test", async ({ }) => {
-        
-console.log(`Hello ${process.env.HELLO}`)
-console.log(`Hello ${process.env.OPENAI_API_KEY}`)
-console.log(`Hello ${process.env.test}`)
-console.log(`Hello ${generateFakeName()}`)
-console.log(`Hello ${generateFakeEmail()}`)
-console.log(`Hello ${generateFakeName()}`)
-console.log(`Hello ${generateFakeEmail()}`)
-console.log(`Hello ${generateFakeName()}`)
-console.log(`Hello ${generateFakeEmail()}`)
+
+        console.log(`Hello ${process.env.HELLO}`)
+        console.log(`Hello ${process.env.OPENAI_API_KEY}`)
+        console.log(`Hello ${process.env.test}`)
+        console.log(`Hello ${generateFakeName()}`)
+        console.log(`Hello ${generateFakeEmail()}`)
+        console.log(`Hello ${generateFakeName()}`)
+        console.log(`Hello ${generateFakeEmail()}`)
+        console.log(`Hello ${generateFakeName()}`)
+        console.log(`Hello ${generateFakeEmail()}`)
     });
 });                                                                                               

@@ -74,8 +74,13 @@ export const test = base.extend<MyFixtures>({
             storageState: "../config/auth/user.json"
         });
         const page = await context.newPage();
-          const blocker = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
-         await blocker.enableBlockingInPage(page);
+        const blocker = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
+        await blocker.enableBlockingInPage(page);
+        page.on("request", request =>
+            console.log("Its a request " + request.url()))
+
+        page.on("requestfailed", request =>
+            console.log("Its a request failed  " + request.url()))
         await use(page);
         await context.close();
     }
