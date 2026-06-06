@@ -1,8 +1,7 @@
 import { test } from "../fixtures/ApiFixtures";
 import { performGetCall } from "../Actions/StatelessAPIActions";
 import { expect } from "@playwright/test";
-import { validateSchema } from 'playwright-schema-validator';
-
+import { validateSchemaWithFile, validateSchemaWithObject } from "../Actions/SchemaValidationActions";
 
 
 
@@ -156,7 +155,7 @@ const notFoundScheme = {
         console.log(res.code);
         console.log(res.type);
         let responseBody = await response.json();
-        await validateSchema({petAPIRequest},responseBody,notFoundScheme)
+        await validateSchemaWithObject({petAPIRequest},responseBody,notFoundScheme)
 
 console.log("========================== after get requests");
         if (res?.type?.includes("error") && res?.message?.includes("Pet not found")) {
@@ -186,7 +185,7 @@ console.log("========================== after get requests");
             console.log(res.status)
         }
         responseBody = await response.json();
-        await validateSchema({petAPIRequest},responseBody,{path: "../resources/jsonFiles/PetSchema.json"})
+        await validateSchemaWithFile({petAPIRequest},responseBody,"../resources/jsonFiles/PetSchema.json")
 console.log("========================== after post ");
 
         response = await petAPIRequest.get(`pet/${id}`);
