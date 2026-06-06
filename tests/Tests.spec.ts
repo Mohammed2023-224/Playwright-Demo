@@ -1,10 +1,14 @@
 import { test } from "../fixtures/TestFixtures";
+import { test as test2 } from "../fixtures/TestFixturesNoLogin";
 import { Links } from "../pages/NavigationBar";
+import {expect} from "@playwright/test";
 import fs from 'fs';
 import path from 'path';
 import { parse } from "csv-parse/sync";
 import { generateFakeName, generateFakeEmail } from "../utilities/GenerateFakeData";
 import {captureScreenshot} from "../utilities/Screenshots";
+import {AxeBuilder} from "@axe-core/playwright";
+
 type ProductRecord = { name: string; price: string };
 
 const csvPath = path.join(
@@ -14,14 +18,20 @@ const csvPath = path.join(
 const productData = parse<ProductRecord>(fs.readFileSync(csvPath, 'utf-8'), { columns: true, skip_empty_lines: true });
 
 test.describe("Sign Up Tests", () => {
-    test.only("Sign Up with valid credentials", async ({ homePage, navigationBar, signUpLoginPage, signUpPage,currentTestInfo }) => {
+    test2("test new features", async ({ homePage, navigationBar, signUpLoginPage, signUpPage,currentTestInfo ,accessibility}) => {
         console.log(`Hello ${process.env.HELLO}`)
 
         await navigationBar.clickOnLink(Links.SIGNUP_IN,currentTestInfo);
+
+    const results = await accessibility.analyze();
+
+
+
         await captureScreenshot( homePage.page,"signup_login",currentTestInfo);
         await signUpLoginPage.enterUsername("testuser");
         await signUpLoginPage.enterEmail("testuser01036@example.com");
         await signUpLoginPage.clickSignUpButton();
+            expect(results.violations).toEqual([]);
         await signUpPage.selectGender("male");
         await signUpPage.enterName("Test User");
         await signUpPage.enterPassword("password123");
@@ -261,3 +271,4 @@ test.describe("tetss", () => {
         console.log(`Hello ${generateFakeEmail()}`)
     });
 });                                                                                               
+
