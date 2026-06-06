@@ -138,16 +138,6 @@ test.describe("Pet swagger store", () => {
 
 for (const id of [9997, 9996]) {
         test(`Full e2e ${id}`, async ({ petAPIRequest }) => {
-          const petSchema = {
-        type: 'object',
-        properties: {
-            id: { type: 'number' },
-            name: { type: 'string' },
-            status: { type: 'string', enum: ['available', 'pending', 'sold'] },
-            photoUrls: { type: 'array', items: { type: 'string' } }
-        },
-        required: ['id', 'name']
-    };
 
 const notFoundScheme = {
     type: 'object',
@@ -196,7 +186,7 @@ console.log("========================== after get requests");
             console.log(res.status)
         }
         responseBody = await response.json();
-        await validateSchema({petAPIRequest},responseBody,petSchema)
+        await validateSchema({petAPIRequest},responseBody,{path: "../resources/jsonFiles/PetSchema.json"})
 console.log("========================== after post ");
 
         response = await petAPIRequest.get(`pet/${id}`);

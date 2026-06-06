@@ -1,0 +1,10 @@
+{
+        "type": "object",
+        "properties": {
+            "id": { "type": "number" },
+            "name": { "type": "string" },
+            "status": { "type": "string", "enum": ["available", "pending", "sold"] },
+            "photoUrls": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["id", "name"]
+    }
