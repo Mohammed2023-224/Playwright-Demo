@@ -1,5 +1,6 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page ,TestInfo } from "@playwright/test";
 import { clickOnElement } from "../Actions/ElementActions";
+import { captureElementScreenshot} from "../utilities/Screenshots";
 
 export enum Links {
   HOME = "Home",
@@ -23,7 +24,8 @@ export class NavigationBar {
   }
 
   // ---------- ACTION ----------
-  async clickOnLink(link: Links) {
+  async clickOnLink(link: Links ,testInfo:TestInfo) {
+    await captureElementScreenshot(this.getNavBarLocator(link), `before_click_${link}`, testInfo);
     await clickOnElement(this.getNavBarLocator(link));
   }
 

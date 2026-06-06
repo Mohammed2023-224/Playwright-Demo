@@ -1,4 +1,4 @@
-import { test as base, Page } from '@playwright/test';
+import { test as base, Page ,TestInfo } from '@playwright/test';
 import { HomePage } from '../pages/HomePage';
 import { NavigationBar } from '../pages/NavigationBar';
 import { SignUpLoginPage } from '../pages/SignUpLoginPage';
@@ -22,6 +22,7 @@ type MyFixtures = {
     checkoutPage: Checkout;
     cardDetails: CardDetails;
     placedOrder: PlacedOrder;
+    currentTestInfo: TestInfo;
 };
 
 
@@ -68,7 +69,10 @@ export const test = base.extend<MyFixtures>({
         await use(placedOrder);
     },
 
-
+currentTestInfo: async ({}, use, testInfo) => {
+        await use(testInfo);
+    },
+    
     userPage: async ({ browser }, use) => {
         const context = await browser.newContext({
             storageState: "../config/auth/user.json"

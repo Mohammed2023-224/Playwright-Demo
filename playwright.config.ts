@@ -31,6 +31,8 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    screenshot: 'only-on-failure',
+    video: 'on-first-retry',
   actionTimeout: 10000,
   navigationTimeout: 10000,    
     /* Base URL to use in actions like `await page.goto('')`. */

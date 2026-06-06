@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { parse } from "csv-parse/sync";
 import { generateFakeName, generateFakeEmail } from "../utilities/GenerateFakeData";
-
+import {captureScreenshot} from "../utilities/Screenshots";
 type ProductRecord = { name: string; price: string };
 
 const csvPath = path.join(
@@ -14,10 +14,11 @@ const csvPath = path.join(
 const productData = parse<ProductRecord>(fs.readFileSync(csvPath, 'utf-8'), { columns: true, skip_empty_lines: true });
 
 test.describe("Sign Up Tests", () => {
-    test.only("Sign Up with valid credentials", async ({ homePage, navigationBar, signUpLoginPage, signUpPage }) => {
+    test.only("Sign Up with valid credentials", async ({ homePage, navigationBar, signUpLoginPage, signUpPage,currentTestInfo }) => {
         console.log(`Hello ${process.env.HELLO}`)
 
-        await navigationBar.clickOnLink(Links.SIGNUP_IN);
+        await navigationBar.clickOnLink(Links.SIGNUP_IN,currentTestInfo);
+        await captureScreenshot( homePage.page,"signup_login",currentTestInfo);
         await signUpLoginPage.enterUsername("testuser");
         await signUpLoginPage.enterEmail("testuser01036@example.com");
         await signUpLoginPage.clickSignUpButton();
@@ -46,7 +47,7 @@ test.describe("Sign Up Tests", () => {
 });
 
 test.describe("login", () => {
-    test("Add product to cart", async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
+    test("Add product to cart", async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder,currentTestInfo }) => {
 
         await homePage.page.route("**/add_to_cart/1", async route => {
             // Only intercept POST requests to the API endpoint
@@ -78,7 +79,7 @@ test.describe("login", () => {
         }
         )
 
-        await navigationBar.clickOnLink(Links.PRODUCTS);
+        await navigationBar.clickOnLink(Links.PRODUCTS, currentTestInfo);
         await homePage.page.waitForLoadState('networkidle');
 
         await productsPage.typeInSearchButton("Sleeveless Dress");
@@ -139,8 +140,8 @@ test.describe("params", () => {
         { name: 'Sleeveless Dress', price: 'Rs. 1000' },
         { name: 'Blue Top', price: 'Rs. 500' },
     ].forEach(({ name, price }) => {
-        test.skip(`test ${name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
-            await navigationBar.clickOnLink(Links.PRODUCTS);
+        test.skip(`test ${name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder,currentTestInfo }) => {
+            await navigationBar.clickOnLink(Links.PRODUCTS,currentTestInfo);
             await productsPage.typeInSearchButton(name);
             await productsPage.clickOnSearchButton();
             await productsPage.hoverAddToCartButton(name, 1);
@@ -194,8 +195,8 @@ test.describe("params", () => {
 
 test.describe("paramsCSV", () => {
     for (const record of productData) {
-        test(`test ${record.name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder }) => {
-            await navigationBar.clickOnLink(Links.PRODUCTS);
+        test(`test ${record.name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder, currentTestInfo }) => {
+            await navigationBar.clickOnLink(Links.PRODUCTS, currentTestInfo);
             await productsPage.typeInSearchButton(`${record.name}`);
             await productsPage.clickOnSearchButton();
             await productsPage.hoverAddToCartButton(`${record.name}`, 1);
