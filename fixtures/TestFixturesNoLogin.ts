@@ -1,0 +1,94 @@
+import { test as base, Page ,TestInfo } from '@playwright/test';
+import { HomePage } from '../pages/HomePage';
+import { NavigationBar } from '../pages/NavigationBar';
+import { SignUpLoginPage } from '../pages/SignUpLoginPage';
+import { Cart } from '../pages/Cart';
+import { Products } from '../pages/Products';
+import { SignUpPage } from '../pages/SignUpPage';
+import { PlacedOrder } from '../pages/PlacedOrder';
+import { CardDetails } from '../pages/CardDetails';
+import { Checkout } from '../pages/Checkout';
+import { PlaywrightBlocker } from '@cliqz/adblocker-playwright';
+import {AxeBuilder} from "@axe-core/playwright";
+
+
+type MyFixtures = {
+    homePage: HomePage;
+    navigationBar: NavigationBar;
+    userPage: Page;
+    signUpLoginPage: SignUpLoginPage;
+    signUpPage: SignUpPage;
+    productsPage: Products;
+    cartPage: Cart;
+    checkoutPage: Checkout;
+    cardDetails: CardDetails;
+    placedOrder: PlacedOrder;
+    currentTestInfo: TestInfo;
+    accessibility: AxeBuilder;
+};
+
+
+export const test = base.extend<MyFixtures>({
+    homePage: async ({ userPage }, use) => {
+
+        const homePage = new HomePage(userPage);
+        await homePage.navigateToHomePage();
+        await use(homePage);
+    },
+    navigationBar: async ({ userPage }, use) => {
+        const navigationBar = new NavigationBar(userPage);
+        await use(navigationBar);
+    }
+    ,
+
+    signUpLoginPage: async ({ userPage }, use) => {
+        const signUpLoginPage = new SignUpLoginPage(userPage);
+        await use(signUpLoginPage);
+    }
+    ,
+    signUpPage: async ({ userPage }, use) => {
+        const signUpPage = new SignUpPage(userPage);
+        await use(signUpPage);
+    },
+    productsPage: async ({ userPage }, use) => {
+        const productsPage = new Products(userPage);
+        await use(productsPage);
+    },
+    cartPage: async ({ userPage }, use) => {
+        const cartPage = new Cart(userPage);
+        await use(cartPage);
+    },
+    checkoutPage: async ({ userPage }, use) => {
+        const checkoutPage = new Checkout(userPage);
+        await use(checkoutPage);
+    },
+    cardDetails: async ({ userPage }, use) => {
+        const cardDetails = new CardDetails(userPage);
+        await use(cardDetails);
+    },
+    placedOrder: async ({ userPage }, use) => {
+        const placedOrder = new PlacedOrder(userPage);
+        await use(placedOrder);
+    },
+
+currentTestInfo: async ({}, use, testInfo) => {
+        await use(testInfo);
+    },
+    accessibility: async ({ userPage }, use) => {
+        const axeBuilder = new AxeBuilder({ page: userPage });
+        await use(axeBuilder);
+    },
+    userPage: async ({ browser }, use) => {
+        const context = await browser.newContext();
+        const page = await context.newPage();
+        const blocker = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
+        await blocker.enableBlockingInPage(page);
+        page.on("request", request =>
+            console.log("Its a request " + request.url()))
+
+        page.on("requestfailed", request =>
+            console.log("Its a request failed  " + request.url()))
+        await use(page);
+        await context.close();
+    }
+});
