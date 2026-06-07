@@ -6,7 +6,7 @@ import { validateSchemaWithFile, validateSchemaWithObject } from "../Actions/Sch
 
 
 test.describe("API Tests", () => {
-    test.only("Login API Test", async ({ apiRequest }) => {
+    test("Login API Test", async ({ apiRequest }) => {
         const response = await performGetCall('products', apiRequest);
         console.log(response.status() );
         const response1 = await performGetCall('products', apiRequest);

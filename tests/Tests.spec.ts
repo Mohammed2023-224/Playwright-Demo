@@ -53,7 +53,6 @@ test.describe("Sign Up Tests", () => {
 
 test.describe("login", () => {
     test("Add product to cart", async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder, currentTestInfo }) => {
-
         await homePage.page.route("**/add_to_cart/1", async route => {
             // Only intercept POST requests to the API endpoint
             if (route.request().method() === 'POST' &&
@@ -145,7 +144,7 @@ test.describe("params", () => {
         { name: 'Sleeveless Dress', price: 'Rs. 1000' },
         { name: 'Blue Top', price: 'Rs. 500' },
     ].forEach(({ name, price }) => {
-        test.skip(`test ${name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder, currentTestInfo }) => {
+        test(`test ${name}`, async ({ homePage, navigationBar, productsPage, cartPage, checkoutPage, cardDetails, placedOrder, currentTestInfo }) => {
             await navigationBar.clickOnLink(Links.PRODUCTS, currentTestInfo);
             await productsPage.typeInSearchButton(name);
             await productsPage.clickOnSearchButton();

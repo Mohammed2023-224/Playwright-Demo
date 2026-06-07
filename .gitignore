@@ -15,3 +15,4 @@ Thumbs.db (Windows)
 npm-debug.log*
 *.tmp
 *.temp
+/allure-results/
